@@ -5,8 +5,8 @@ element = 'A'; // A=65 // string
 
 // 자바스크립트는 정수와 실수를 모두 실수로 판단한다.
 let age = 20;
-console.log(typeof age);
 
+console.log(typeof age);
 // 자바나 c언어에서는 정수와 정수를 나누면 실수의 값이 나오더라도 정수의 값만 가져와 2만 나오지만 자바 스크립트에서는 정수도 실수로 판단하기 때문에 2.5의 값이 나온다
 console.log(20 / 8);
 
