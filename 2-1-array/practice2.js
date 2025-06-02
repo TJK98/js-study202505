@@ -10,27 +10,57 @@
 4. 전체멤버를 정확하게 삭제할때까지 프로그램은 계속되어야 합니다.
 */
 
-/*let dongbang = [`유노윤호`, `영웅재중`, `믹키유천`, `시아준수`];
+let dongbangsinki = ['유노윤호', '최강창민', '영웅재중', '믹키유천', '시아준수'];
 
 while (true) {
+    let deleteName = prompt(`
+    현재 맴버: [${dongbangsinki}]
+    수정할 이름을 입력하세요.
+    `);
+
+    if (dongbangsinki.includes(deleteName)) {
+        dongbangsinki.splice(dongbangsinki.indexOf(deleteName), 1);
+        alert(`삭제 완료
+        남은 멤버: ${dongbangsinki}`);
+    } else {
+        alert(`${deleteName}은 잘못된 이름입니다.`);
+        continue;
+    }
+    if (dongbangsinki.length === 0) {
+        break;
+    }
+}
+alert(`모든 멤버가 삭제 되었습니다.`)
+
+
+
+
+
+
+
+
+/*
+while (true) {
     let input = prompt(`
-현재 맴버: [${dongbang}]
+현재 맴버: [${dongbangsinki}]
 수정할 이름을 입력하세요.
     `);
-    let flag = dongbang.indexOf(input);
-    if (dongbang.includes(input)) {
-        dongbang.splice(flag, 1);
-        alert(`남은 맴버는: [${dongbang}]입니다.`);
+    let flag = dongbangsinki.indexOf(input);
+    if (dongbangsinki.includes(input)) {
+        dongbangsinki.splice(flag, 1);
+        alert(`남은 맴버는: [${dongbangsinki}]입니다.`);
     }
-    if (!dongbang.includes(input)) {
+    if (!dongbangsinki.includes(input)) {
         alert(`${input}은 잘못된 이름입니다.`);
         continue;
     }
     alert(`모든 맴버가 삭제되었습니다.`);
-}*/
+}
+*/
 
 
 
+/*
 let tvxq = ['유노윤호', '최강창민', '영웅재중', '믹키유천', '시아준수'];
 
 while (tvxq.length > 0) {
@@ -49,4 +79,4 @@ while (tvxq.length > 0) {
     // 종료조건
     // if (tvxq.length === 0) break;
 
-}
+}*/

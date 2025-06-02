@@ -11,6 +11,42 @@
 4. 한 명의 멤버를 정확하게 수정할때까지 프로그램은 계속되어야 합니다.
 */
 
+let dongbangsinki = ['유노윤호', '최강창민', '영웅재중', '믹키유천', '시아준수'];
+
+
+while (true) {
+    let editName = prompt(`현재 맴버: [${dongbangsinki}]
+    수정할 이름을 입력하세요.`);
+
+    if (dongbangsinki.includes(editName)) {
+        let newName = prompt(`새로운 이름을 입력하세요.`);
+        dongbangsinki.splice(dongbangsinki.indexOf(editName), 1, `${newName}`);
+        alert(`수정 완료
+        남은 멤버: ${dongbangsinki}`);
+    } else {
+        alert(`${editName}은 잘못된 이름입니다.
+        다시 입력하세요.`);
+    }
+    if (dongbangsinki.length === 0) {
+        break;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 let tvxq = ['유노윤호', '최강창민', '영웅재중', '믹키유천', '시아준수'];
 
 while (true) {
@@ -29,4 +65,4 @@ while (true) {
         alert(`${targetName}은(는) 잘못된 이름입니다.\n다시 입력하세요!`);
     }
 
-}
+}*/
