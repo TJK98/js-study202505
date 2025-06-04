@@ -11,6 +11,20 @@
 
 Math.round(5.78999); // 반올림 -> 6
 */
+
+/**
+ * bmi값을 전달 받아 현재 체중 상태를 출력하는 함수
+ */
+function judgrBMI(myBmi) {
+    if (myBmi >= 25.0) {
+        console.log(`당신은 과체중입니다.`);
+    } else if (myBmi <= 18.5) {
+        console.log(`당신은 저체중입니다.`);
+    } else {
+        console.log(`당신은 정상 체중입니다.`);
+    }
+}
+
 /**
  * 키와 몸무게를 전달 받아 BMI 지수를 계산해서 반환하는 함수
  * @param h - 신장
@@ -20,18 +34,12 @@ Math.round(5.78999); // 반올림 -> 6
 function calcBMI(h, w) {
     let m = h / 100;
     let myBmi = w / (m * m);
-    if (myBmi >= 25.0) {
-        console.log(`당신은 과체중입니다.`);
-    } else if (myBmi <= 18.5) {
-        console.log(`당신은 저체중입니다.`);
-    } else {
-        console.log(`당신은 정상 체중입니다.`);
-    }
+    judgrBMI(myBmi);
     return myBmi;
 }
 
 function round(myBmi, digits) {
-    const mathRound = 10 ** digits;
+    let mathRound = 10 ** digits;
     return Math.round(myBmi * mathRound) / mathRound;
 }
 
