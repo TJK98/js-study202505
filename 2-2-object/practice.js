@@ -36,3 +36,36 @@ let userInfo = {
 
     ],
 };
+
+
+// 로그인 로직
+// 사용자가 입력한 계정명으로 해당 계정 데이터 찾아내기
+while (true) {
+    let inputAccount = prompt(`계정을 입력하세요.`);
+
+    // let flag = false;
+    let currentUser = null; // 발견된 유저를 백업할 변수
+    for (let user of userInfo.userList) {
+        if (inputAccount === user.account) {
+            //console.log(`가입된 계정입니다.`);
+            //flag = true;
+            currentUser = user;
+            break;
+        } /*else {
+            console.log(`회원 가입 되지 않은 계정입니다.`);
+    }*/
+    }
+
+    if (!currentUser) {
+        alert(`회원 가입 된 계정이 아닙니다.`);
+        continue;
+    }
+
+    let inputPassword = prompt(`비밀번호를 입력하세요.`);
+    if (inputPassword === currentUser.password) {
+        alert(`로그인 성공입니다`);
+        break;
+    } else {
+        alert(`비밀번호가 틀렸습니다.`);
+    }
+}
