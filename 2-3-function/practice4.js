@@ -35,7 +35,7 @@ function calculateAverageScore(...scores) {
     let minScore = scores[0];
     let maxScore = scores[0];
     let sum = 0;
-    for (let i = 0; i < scores.length; i++) {
+    for (let i = 1; i < scores.length; i++) {
         if (scores[i] < minScore) {
             minScore = scores[i];
         } else if (scores[i] > maxScore) {
