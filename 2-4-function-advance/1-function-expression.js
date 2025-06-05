@@ -65,7 +65,7 @@ console.log(bbeki);
 
 console.log(`=============================================`);
 const obj = {
-    name: `초코`
+    name: `초코`,
     age: 5,
     injection: true,
     favorites: [`산책`, `공놀이`],
