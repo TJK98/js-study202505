@@ -52,14 +52,24 @@ function mapByUserNames() {
 }
 
 
-// 아무 목록에서 특정 데이터만 모두 추출해서 새배열로 줘!
-function map(array, callback) {
+// 회원 목록에서 특정 데이터만 모두 추출해서 새배열로 줘!
+function mapByUser(callback) {
     const mappedArray = [];
-    for (const element of userList) {
-        const item = callback(element);
+    for (const user of userList) {
+        const item = callback(user);
         mappedArray.push(item);
     }
     return mappedArray;
+}
+
+// 아무 목록에서 특정 데이터만 모두 추출해서 새배열로 줘!
+function foo(array, callback) {
+    const fooArray = [];
+    for (const element of array) {
+        const item = callback(element);
+        fooArray.push(item);
+    }
+    return fooArray;
 }
 
 const map1 = mapByUserJobs();
@@ -78,14 +88,28 @@ console.log(map3);
 
 console.log('===================');
 
-// 회원들의 이름과 직업만 추출해서 객체로 묶은 다음 새배열로 리턴!
-// [ {이름: '', 직업: ''}, {}, {}, {} ]
-const map4 = mapByUser(user =>
-    ({
-        name: user.userName,
-        occupation: user.job
-    }));
+// 회원들의 이름과 주소만 추출해서 객체로 묶은 다음 새배열로 리턴!
+// [ {이름: '', 주소: ''}, {}, {}, {} ]
+const map4 = mapByUser(user => ({
+    name: user.userName,
+    occupation: user.job
+}));
 console.log(map4);
 
-const numbers = [1,2,3,4,5,6,7,8,9];
+
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 const names = ['홍길동', '김철수', '김뽀삐', '이뚜뚜', '홍뽀로로', '박짜짜'];
+
+console.log('===================');
+const map5 = map(numbers, n => n ** 2);
+console.log(map5);
+
+console.log('===================');
+const map6 = map(names, name => name[0]);
+console.log(map6);
+
+console.log('===================');
+const map7 = map(userList, user => user.hobbies);
+console.log(map7);
+
+
