@@ -27,11 +27,13 @@ console.log(`=============================================`);
 
 // 맨 앞 2개의 숫자만 각각의 변수에 저장하고 나머지 4개의 숫자는 다시 한 번 배열로 묶고 싶다.
 const nums = [1, 3, 5, 7, 9, 11];
+/*
 const others = nums.slice();
-/*const one = others.shift();
-const three = others.shift();*/
+const one = others.shift();
+const three = others.shift();
+*/
 
-const [one, three, ...ohthers] = nums;
+const [one, three, ...others] = nums;
 console.log(`one: ${one}`);
 console.log(`three: ${three}`);
 console.log(`others`, others);
