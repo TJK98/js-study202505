@@ -169,6 +169,6 @@ function myReduce(callback, initialValue) {
 
 console.log('===================');
 
-const result2 = myReduce((a, b) => a+b.sweet, 0);
+const result2 = myReduce((a, b) => a + b.sweet, 0);
 console.log(`result2: ${result2}`);
 
