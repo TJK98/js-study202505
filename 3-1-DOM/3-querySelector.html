@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Title</title>
+</head>
+<body>
+  <ul>
+    <li class="fruit apple">사과</li>
+    <li class="fruit banana">바나나</li>
+    <li id="gp" class="fruit grape">포도</li>
+    <li class="fruit peach">복숭아</li>
+  </ul>
+
+  <script>
+    // 포도 li를 가져오고 싶음.
+    // querySelector는 안에 css 선택자를 써야함.
+    const $grape = document.querySelector(`.grape`);
+    // const $grape = document.querySelector(`ul .grape`);
+    // const $grape  document.getElementById(`gp`);
+    // const $grape = document.querySelector(`#gp`);
+    // const $grape = document.querySelector(`ul li:nth-child(3)`);
+    // const $grape = document.querySelector(`ul li:nth-child(7)`); 이건 null 에러
+    // const $grape = document.querySelector(`ul @li:nth-child(3)`); SyntaxError 에러
+    // const $grape = document.querySelector(`.banana + li`);
+    $grape.style.color = `violet`;
+    $grape.style.fontSize = `1.5rem`;
+
+    // querySelector는 해당 선택자에서 일치하는 가장 처음 발견된 태그를 가져옴
+    console.log(`=============================================`);
+
+    // querySelectorAll은 유사 배열 형태로 데이터를 모아오므로 기능확장성이 낮음 따라서 진짜 배열로 바꿔서 써야함
+    const arrayLike = {
+      0: `안녕`,
+      1: `hello`,
+      length: 2
+    };
+    console.log(arrayLike[1]);
+
+    // 유사 배열 (array like), 배열 같이 생긴 객체
+    const elements = document.querySelectorAll(`.fruit`);
+    console.log(elements);
+
+    // 유사배열을 진짜 배열로
+    // const realArray = Array.from(elements)
+    const realArray = [...elements]
+    console.log(realArray);
+
+    const $fruits = [...document.querySelectorAll(`.fruit`)];
+    console.log($fruits);
+
+    $fruits.forEach($li => {
+      $li.style.fontStyle = `italic`
+      $li.style.border = `2px solid orange`
+    })
+
+  </script>
+</body>
+</html>
