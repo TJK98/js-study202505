@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Title</title>
+    <style>
+        .highlight {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <!--  inner text는 줄바꿈 적용이 안 됨
+    inner HTML은 태그까지 text 취급
+    text와 줄바꿈이 동시에 적용이 되는 text content로 조작해야 함-->
+    <div id="greet">
+        Hello <span class="highlight">World!</span>
+    </div>
+
+    <p>
+        세
+        로
+        드
+        립
+        가
+        로
+        아
+        님
+    </p>
+
+    <ul id="food-list">
+        <li class="food">고구마</li>
+        <li class="food">감자</li>
+        <li class="food">돼지감자</li>
+    </ul>
+
+    <script>
+        const $greet = document.getElementById(`greet`);
+        console.log($greet.firstElementChild.textContent);
+        console.log($greet.textContent);
+        console.log($greet.innerText);
+        console.log($greet.textContent.trim());
+        console.log($greet.innerHTML);
+
+        // 순수하게 텍스트 조작
+        $greet.textContent = `안녕`;
+        // 태그와 함께 텍스트 조작
+        $greet.innerHTML = `안녕<span class="highlight">하세요</span>`;
+        const $foodList = document.getElementById(`food-list`);
+        // 자식 태그 일괄 수정
+        $foodList.innerHTML = `<li>메롱</li>`
+        // 자식 태그를 추가
+        $foodList.innerHTML += `<li>헤헤</li>`
+
+        for (let i = 0; i < 5; i++) {
+            $foodList.innerHTML += `<li>호호</li>`
+        }
+        [`간짜장`, `치킨`, `피자`, `햄버거`].forEach(food => {
+            $foodList.innerHTML += `<li>${food}</li>`
+        });
+        // 자식 태그 전체 삭제, 빈문자열 넣기
+        $foodList.innerHTML = ``
+    </script>
+
+</body>
+</html>
