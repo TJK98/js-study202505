@@ -124,6 +124,15 @@ const totalValueByCity = traders.reduce((acc, current) => {
 
 console.log(totalValueByCity); // {도시: 총 거래액}
 
+const totalByCity = traders.reduce((cityObj, trs) => {
+    const city = trs.trader.city;
+    cityObj[city] = (cityObj[city] || 0) + trs.value;
+    return cityObj;
+}, {});
+
+console.log(totalByCity);
+
+
 console.log(`=============================================`);
 
 // 4. **각 도시에서 진행된 거래의 수를 계산해주세요.
