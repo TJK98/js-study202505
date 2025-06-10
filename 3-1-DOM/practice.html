@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Document</title>
+</head>
+<body>
+    <div id="wrap">
+        <ul id="list1">
+            <li>리스트1</li>
+            <li>리스트2</li>
+            <li>리스트3</li>
+            <li>리스트4</li>
+            <li>리스트5</li>
+            <li>리스트6</li>
+            <li>리스트7</li>
+        </ul>
+    </div>
+
+    <script>
+        //1. id="list1"인 요소에 <li> 요소중
+        //    홀수번째 요소만 선택후 배경색상 yellow 적용
+        const $elementByIdList1 = [...document.querySelectorAll("#list1 li:nth-child(2n-1)")];
+        $elementByIdList1.forEach(li => li.style.background = `yellow`);
+
+        //2. id="list1"인 요소에 <li> 요소중
+        //   짝수번째 요소만 선택후 배경색상 gray 적용
+        const $elementByIdList2 = [...document.querySelectorAll("#list1 li:nth-child(2n)")];
+        $elementByIdList2.forEach(li => li.style.background = `gray`);
+
+
+        //3. id="list1"인 요소에 <li> 요소중
+        //  첫번째 <li>요소만 선택후 폰트색상 red 적용
+        const $elementByIdList3 = document.querySelector("#list1 li:first-child");
+        $elementByIdList3.style.color = `red`;
+
+        //4. id="list1"인 요소에 <li> 요소중
+        //   마지막번째 <li>요소만 선택후 폰트색상 green 적용
+        const $elementByIdList4 = document.querySelector("#list1 li:last-child");
+        $elementByIdList4.style.color = `green`;
+
+        //5. id="list1"인 요소에 <li> 요소중
+        // 두번째 <li>요소만 선택후 font-style: italic 적용
+
+        const $elementByIdList5 = document.querySelector("#list1 li:nth-child(2)");
+        $elementByIdList5.style.fontStyle = `italic`;
+
+
+        //6. id="list1"인 요소에 <li> 요소중  3번째 이전 요소만 선택후
+        //   border: 2px dotted aqua 적용 (1, 2번째만 선택)
+        const $elementByIdList6 = [...document.querySelectorAll("#list1 li:nth-child(-n+3)")];
+        $elementByIdList6.forEach(li => li.style.border = `2px dotted aqua`);
+
+
+        //7. id="list1"인 요소에 <li> 요소중  3번째 이후요소만 선택후
+        //   border 2px dashed violet 적용 (3번째부터 끝까지 선택)
+        const $elementByIdList7 = [...document.querySelectorAll("#list1 li:nth-child(n+2)")];
+        $elementByIdList7.forEach(li => li.style.border = `2px dashed violet`);
+
+        const liList = [...document.querySelectorAll("#list1 li")];
+        liList.reduce((n, li) => {
+            if (n % 2 === 1) {
+                li.style.background = "yellow";
+            } else {
+                li.style.background = "gray";
+            }
+            if (n === 1) {
+                li.style.color = `red`;
+            } else if (n === liList.length) {
+                li.style.color = `green`;
+            }
+            if (n === 2) {
+                li.style.fontStyle = `italic`;
+            }
+            if (n < 3) {
+                li.style.border = `2px dotted aqua`;
+            } else {
+                li.style.border = `2px dashed violet`;
+            }
+            return n + 1;
+        }, 1);
+
+        const liListGpt = [...document.querySelectorAll("#list1 li")];
+
+        liListGpt.reduce((n, li) => {
+            // 홀짝 배경색
+            li.style.background = n % 2 === 1 ? "yellow" : "gray";
+
+            // 첫 번째 요소 글자색
+            if (n === 1) li.style.color = "red";
+
+            // 마지막 요소 글자색
+            else if (n === liListGpt.length) li.style.color = "green";
+
+            // 두 번째 요소 이탤릭
+            if (n === 2) li.style.fontStyle = "italic";
+
+            // 1~2번째 요소는 dotted 테두리, 이후는 dashed 테두리
+            li.style.border = n < 3 ? "2px dotted aqua" : "2px dashed violet";
+
+            return n + 1;
+        }, 1); // 순서를 1부터 시작 (nth-child 기준 맞춤)
+    </script>
+</body>
+</html>
