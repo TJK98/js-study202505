@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8"/>
+    <title>DOM 실습</title>
+    <style>
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="main-title">DOM 조작 연습</h1>
+    <ul id="todo-list">
+        <li>HTML 복습</li>
+        <li>CSS 정리</li>
+        <li>JavaScript 실습</li>
+    </ul>
+    <button id="add-btn">할 일 추가</button>
+    <button id="toggle-btn">목록 토글</button>
+
+    <script>
+
+        /*🧪 문제 1: 요소 선택과 텍스트 수정
+        h1#main-title 요소를 선택하여 **텍스트를 "DOM 조작 마스터하기"**로 바꾸세요.
+        ultodo-list의 **첫 번째 항목의 텍스트를 "HTML 구조 복습하기"**로 바꾸세요.*/
+
+        const practiceOne1 = document.querySelector(`#main-title`);
+        practiceOne1.textContent = `DOM 조작 마스터하기`;
+        const practiceOne2 = document.querySelectorAll(`#todo-list li:first-child`);
+        practiceOne2[0].textContent = `HTML 구조 복습하기`;
+
+        /*🧪 문제 2: 새로운 항목 추가
+        ultodo-list의 맨 마지막에 "Git 공부하기" 항목을 <li> 태그로 추가하세요.
+        ultodo-list의 맨 앞에 "개념 정리하기" 항목을 <li>로 추가하세요.*/
+
+        const practiceTwo1Li = document.createElement(`li`);
+        practiceTwo1Li.textContent = `Git 공부하기`;
+        const practiceTwo1Li2 = document.createElement(`li`);
+        practiceTwo1Li2.textContent = `개념 정리하기`;
+        const practiceTwo1 = document.querySelector(`#todo-list`);
+        practiceTwo1.append(practiceTwo1Li);
+        practiceTwo1.prepend(practiceTwo1Li2);
+
+        /*🧪 문제 4: 클래스 조작
+        "HTML 구조 복습하기" 항목에 highlight 클래스를 추가하세요.
+        "Git 공부하기" 항목이 이미 highlight 클래스를 가지고 있으면 제거하고, 없으면 추가되도록 toggle하세요.
+        highlight 클래스를 가진 항목이 몇 개인지 개수를 출력하세요.*/
+
+            const practiceFour1 = document.querySelectorAll(`#todo-list li`);
+        practiceFour1[1].classList.add(`highlight`);
+        practiceFour1[4].classList.toggle(`highlight`);
+        const count = Array.from(practiceFour1).filter(item => item.classList.contains('highlight')).length;
+        console.log(`highlight 클래스가 있는 항목 수: ${count}`);
+
+        /*🧪 문제 3: 요소 삭제와 교체
+        ul의 두 번째 <li> 요소를 삭제하세요.
+        "JavaScript 실습" 항목을 "JavaScript DOM 조작"으로 교체하세요 (텍스트만 바꾸는 게 아니라 새 요소로 교체).*/
+
+        const practiceThree1 = document.querySelector(`#todo-list li:nth-child(2)`);
+        practiceThree1.remove();
+        const practiceThree2Li = document.createElement(`li`);
+        practiceThree2Li.textContent = `JavaScript DOM 조작`;
+        const practiceThree2 = document.querySelector(`#todo-list li:nth-child(3)`);
+        practiceThree2.replaceWith(practiceThree2Li);
+
+    </script>
+</body>
+</html>
