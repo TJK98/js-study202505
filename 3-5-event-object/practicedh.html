@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Title</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+
+        #slider {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        #slider img {
+            max-width: 400px;
+            max-height: 300px;
+            display: block;
+            object-fit: cover;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        button:focus {
+            outline: none;
+        }
+        #thumbnails {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .thumbnail {
+            width: 100px;
+            height: 75px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            border-radius: 5px;
+        }
+
+        .thumbnail:hover {
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="slider">
+        <button id="prev">이전</button>
+        <img id="image" src="https://blog.kakaocdn.net/dn/dN4uhe/btr8xWDwbrK/5YjBrelhtJwU2BAcLtEVoK/img.jpg"
+             style="width: 400px; height: auto;">
+        <button id="next">다음</button>
+    </div>
+
+    <!-- 모든 이미지의 썸네일을 슬라이더 하단에 배치 -->
+    <div id="thumbnails">
+        <!-- 스크립트로 배치 -->
+        <!--<img class="thumbnail" src="https://blog.kakaocdn.net/dn/dN4uhe/btr8xWDwbrK/5YjBrelhtJwU2BAcLtEVoK/img.jpg" alt="">
+        <img class="thumbnail" src="https://www.sisajournal.com/news/photo/202108/222572_131065_5150.jpg" alt="">
+        <img class="thumbnail" src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D" alt="">
+        <img class="thumbnail" src="https://img.wowtv.co.kr/wowtv_news/dnrs/20200922/B20200922173834073.jpg" alt="">-->
+
+    </div>
+
+    <script>
+        // 이미지 경로를 저장할 배열
+        const images = [
+            'https://blog.kakaocdn.net/dn/dN4uhe/btr8xWDwbrK/5YjBrelhtJwU2BAcLtEVoK/img.jpg',
+            "https://www.sisajournal.com/news/photo/202108/222572_131065_5150.jpg",
+            'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D',
+            'https://img.wowtv.co.kr/wowtv_news/dnrs/20200922/B20200922173834073.jpg',
+        ];
+
+        const $image = document.getElementById('image');
+        const $thumbnail = document.getElementById('thumbnails');
+        const $nextBtn = document.getElementById('next');
+        const $prevBtn = document.getElementById('prev');
+
+        let currentIndex = 0;
+
+        // 배열 안 이미지 thumbnails 추가
+        for (let i = 0; i < images.length; i++) {
+            // 이미지 요소 생성
+            const img = document.createElement('img');
+            // url 추가
+            img.src = images[i];
+            // classname 추가(css)
+            img.className = 'thumbnail';
+            // id 추가(selector용)
+            img.id = 'thumbnail-'+i;
+
+            thumbnails.appendChild(img);
+        }
+
+        function changeImage(clickedButton, e) {
+            if (clickedButton === 'next') {
+
+                currentIndex++;
+
+                if (currentIndex === images.length) {
+                    currentIndex = 0;
+                }
+
+            } else if(clickedButton === 'prev') {
+
+                currentIndex--;
+
+                if (currentIndex === -1) {
+                    currentIndex = images.length - 1;
+                }
+
+            } else if (clickedButton === 'thumbnail') {
+
+                // 여기부터 else if로 다 뺏어. 너가 원하는 깰꼼쓰
+                const target = e.target;
+                if (target.classList.contains('thumbnail')) {
+                    // id가 "thumbnail-0" 형태니까 숫자만 따로빼와서 index값 추출
+                    const id = target.id;
+                    // 숫자여도 문자열이라 정수형으로 파싱
+                    const index = parseInt(id.replace('thumbnail-', ''), 10);
+
+                    // 썸내일의 인덱스 위치로 변경 - 다음 / 이전을 정확하게 하기 위함
+                    currentIndex = index;
+                }
+            }
+
+            $image.src = images[currentIndex];
+        }
+
+        // 썸네일 이벤트 생성
+        $thumbnail.addEventListener('click', (e) => changeImage('thumbnail', e));
+        $nextBtn.addEventListener('click', () => changeImage('next'));
+        $prevBtn.addEventListener('click', () => changeImage('prev'));
+    </script>
+</body>
+</html>
