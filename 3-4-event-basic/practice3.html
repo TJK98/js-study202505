@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Title</title>
+</head>
+<body>
+    <input type="text" id="colorInput" placeholder="색상 이름이나 HEX 코드를 입력하세요">
+    <div id="warning" style="color: red; display: none;">유효하지 않은 색상입니다!</div>
+    <!--input이라는 이벤트타입을 사용, 값을 가져올때는 태그노드.value 로 가져오세요-->
+
+    <script>
+
+        const $colorInput = document.getElementById('colorInput');
+        const $warning = document.getElementById('warning');
+
+        $colorInput.addEventListener('input', () => {
+            // 입력된 색상 값
+            const inputColor = $colorInput.value;
+
+            // 우선 색상 적용 시도
+            document.body.style.background = inputColor;
+
+            // 적용된 값과 입력한 값이 다르면 유효하지 않은 색상
+            if (document.body.style.background !== inputColor) {
+                $warning.style.display = 'block'; // 경고 메시지 표시
+            } else {
+                $warning.style.display = 'none'; // 경고 메시지 숨기기
+            }
+        });
+
+        const $colorInput = document.getElementById('colorInput');
+        const $warning = document.getElementById('warning');
+
+        $colorInput.addEventListener('input', () => {
+            // 입력값을 변수로 저장
+            const inputColor = $colorInput.value;
+
+            // 우선 배경색 적용 시도
+            document.body.style.background = inputColor;
+
+            // 적용된 배경색을 변수로 저장
+            const bgColor = document.body.style.background;
+
+            // 배경색이 비어 있으면 잘못된 색상
+            if (!bgColor) {
+                $warning.style.display = 'block';
+            } else {
+                $warning.style.display = 'none';
+            }
+        });
+
+    </script>
+
+</body>
+</html>
