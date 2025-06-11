@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Title</title>
+  <style>
+    #image {
+      width: 100px;
+      transition: width 0.3s;
+    }
+  </style>
+</head>
+<body>
+  <div class="btn-group">
+    <button id="increaseSize">이미지 크기 증가</button>
+    <button id="decreaseSize">이미지 크기 감소</button>
+  </div>
+  <img id="image" src="https://image.yes24.com/goods/105982287/XL" alt="이미지">
+
+  <script>
+    // 가로세로가 20픽셀씩 커지게, 작이지게
+/*    const $image = document.getElementById(`image`);
+    const $size = [...document.querySelectorAll(`button`)];
+    const plus20 = () => {
+      $image.style.width = `120px`
+      $image.style.height = `120px`
+    };
+    const minus20 = () => {
+      $image.style.width = `80px`
+      $image.style.height = `80px`
+    };
+    $size[0].addEventListener(`click`, plus20)
+    $size[1].addEventListener(`click`, minus20)*/
+
+/*      const $image = document.getElementById("image");
+      const $buttons = document.querySelectorAll("button");
+
+      $buttons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        // 증가 버튼이면 +20px, 아니면 -20px
+        $image.style.width = btn.id === "increaseSize" ? "120px" : "80px";
+        $image.style.height = btn.id === "increaseSize" ? "120px" : "80px";
+      });
+    });*/
+    const $increaseBtn = document.getElementById('increaseSize');
+    const $decreaseBtn = document.getElementById('decreaseSize');
+    const $image = document.getElementById('image');
+
+    $increaseBtn.addEventListener('click', () => {
+        // 이미지의 가로사이즈를 증가시켜야 한다.
+        // 현재 이미지 가로사이즈 기준으로 20씩 더해나가야 함.
+        // 현재 이미지 가로사이즈는 어떻게 앎?
+        const newWidthSize = $image.width + 20;
+        if (newWidthSize <= 300) {
+            $image.style.width = `${newWidthSize}px`;
+        }
+    });
+    $decreaseBtn.addEventListener('click', () => {
+        const newWidthSize = $image.width - 20;
+        if (newWidthSize >= 40) {
+            $image.style.width = `${newWidthSize}px`;
+        }
+    });
+
+
+  </script>
+
+</body>
+</html>
