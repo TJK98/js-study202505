@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Title</title>
+</head>
+<body>
+  <button id="btn">버튼입니다.</button>
+
+  <script>
+    // 아이디가 존재하면 아이디 이름으로 변수를 쓸 수 있다. (추천 X)
+    // btn.style.color = `red`;
+    const $btn = document.getElementById(`btn`);
+
+    const helloHandler = () => {
+      alert(`안녕하세요.`)
+    };
+    // on 제외 문자열로 써야한다, 함수 호출 ()을 쓰면 안 되고, 함수 전달해야 한다.
+    $btn.addEventListener(`click`, helloHandler);
+    $btn.addEventListener(`click`, () => {
+      $btn.style.background = `aqua`
+    });
+    // 이벤트 제거 가능 (단, 핸들러의 이름이 있어야 함)
+    $btn.removeEventListener(`click`, helloHandler);
+
+
+
+  </script>
+</body>
+</html>
