@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Title</title>
+</head>
+<body>
+
+  <div>
+    <button id="b1">클릭1</button>
+  </div>
+  <div>
+    <button id="b2">클릭2</button>
+  </div>
+  <div>
+    <button id="b3">클릭3</button>
+  </div>
+
+  <script>
+    const [$b1, $b2, $b3] = [...document.querySelectorAll(`button`)];
+
+    // 이벤트 핸들러
+    function sayHelloHandler() {
+      alert(`hello`);
+    }
+    // 이벤트 핸들러 바인딩
+    // 숫자나 문자열 안 된다, 함수만 가능, 함수의 이름만 써야한다. () X, 함수 호출 (), 함수 전달 () X
+    $b1.onclick = sayHelloHandler;
+    $b2.ondblclick = function () {
+      $b2.style.width = `150px`
+    }
+    $b3.onmouseover = () => {
+      $b3.style.background = `red`
+    };
+    $b3.onmouseout = () => {
+      $b3.style.background = `yellow`
+    }
+
+    // 프로퍼티 바인딩의 장단점 : 같은 종류의 타입의 이벤트에 다른 핸들러를 바인딩 할 수 없음
+    // 단일 이벤트를 걸어야 할 때 프로퍼티 바인딩, 중첩 이벤트를 걸어야 할 때는 다른 것
+    $b3.onmouseover = () => {
+      $b3.style.width = `100px`
+    };
+    // 삭제
+    $b3.onmouseout = null;
+
+
+  </script>
+
+</body>
+</html>
