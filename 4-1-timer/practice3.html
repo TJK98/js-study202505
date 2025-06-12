@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스탑워치</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .stopwatch {
+            font-size: 2rem;
+            margin: 20px;
+        }
+
+        .buttons, .log-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button[disabled] {
+            cursor: not-allowed;
+        }
+
+        .log-container {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .log-entry {
+            font-size: 1rem;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>스탑워치</h1>
+    <div class="stopwatch" id="display">00:00:00</div>
+    <div class="buttons">
+        <button id="start">시작</button>
+        <button id="pause" disabled>일시정지</button>
+        <button id="reset">초기화</button>
+    </div>
+    <div class="log-container" id="logContainer">
+        <h2>일시정지 로그</h2>
+        <div class="log-entry"></div>
+    </div>
+
+    <script>
+        // 전역 상태 변수
+        let elapsedTime = 0;            // 경과 시간(ms 단위)
+        let timerIntervalId = null;     // setInterval ID 저장용 (clearInterval에 사용)
+        let isRunning = false;          // 스톱워치 실행 여부 상태
+        let logCount = 0;               // 로그 항목 번호 추적용
+
+        // DOM 요소 선택
+        const [$startBtn, $pauseBtn, $resetBtn] = [...document.querySelector('.buttons').children]; // 버튼 3개를 배열 구조 분해 할당
+        const $display = document.getElementById('display');     // 시간 표시 영역
+        const $logEntry = document.querySelector('.log-entry');  // 로그가 쌓이는 영역
+
+        // 시간 포맷 변환 (분:초:밀리초 두 자리)
+        function formatElapsedTime() {
+            const minutes = String(Math.floor(elapsedTime / 60000)).padStart(2, "0");           // 분 계산
+            const seconds = String(Math.floor((elapsedTime % 60000) / 1000)).padStart(2, "0");   // 초 계산
+            const millisecond = String(Math.floor((elapsedTime % 1000) / 10)).padStart(2, '0');  // 10ms 단위로 환산
+            $display.textContent = `${minutes}:${seconds}:${millisecond}`; // 표시 형식으로 출력
+        }
+
+        // 버튼 활성/비활성 상태 전환
+        function changeState(isStart) {
+            $startBtn.disabled = isStart;     // 시작 버튼은 실행 중 비활성화
+            $pauseBtn.disabled = !isStart;    // 일시정지 버튼은 실행 중 활성화
+            isRunning = isStart;              // 상태 플래그 업데이트
+        }
+
+        // 현재 시간 로그 항목 추가
+        function logStopwatchTime() {
+            logCount++; // 로그 번호 증가
+            const $logDiv = document.createElement('div');    // 로그 div 생성
+            $logDiv.classList.add('log-item');                // 클래스 추가 (스타일/이벤트 구분용)
+            $logDiv.dataset.index = logCount;                 // data-index 속성으로 고유 번호 부여
+            $logDiv.textContent = $display.textContent;       // 현재 시간 텍스트 삽입
+            $logEntry.appendChild($logDiv);                   // 로그 entry에 추가
+        }
+
+        // 시작 버튼 동작
+        function startStopwatch() {
+            changeState(true); // 버튼 상태 변경
+            timerIntervalId = setInterval(() => {
+                elapsedTime += 10;           // 10ms 단위로 경과 시간 누적
+                formatElapsedTime();         // 화면에 갱신
+            }, 10);
+        }
+
+        // 일시정지 및 재개 버튼 동작
+        function pauseStopwatch() {
+            if (isRunning) {
+                clearInterval(timerIntervalId);   // 실행 중이면 타이머 멈춤
+                isRunning = false;                // 상태 업데이트
+                $pauseBtn.textContent = '재개';   // 버튼 텍스트 변경
+                logStopwatchTime();               // 현재 시간 로그로 남김
+            } else {
+                startStopwatch();                 // 다시 실행
+                $pauseBtn.textContent = '일시정지'; // 버튼 텍스트 원복
+            }
+        }
+
+        // 초기화 버튼 동작
+        function resetStopwatch() {
+            elapsedTime = 0;                      // 시간 초기화
+            clearInterval(timerIntervalId);       // 타이머 정지
+            timerIntervalId = null;
+            $display.textContent = '00:00:00';    // 시간 표시 초기값 설정
+            $pauseBtn.textContent = '일시정지';   // 버튼 텍스트 복원
+            changeState(false);                   // 버튼 상태 복원
+            $logEntry.innerHTML = '';             // 로그 기록 모두 제거
+        }
+
+        // 로그 클릭 시 삭제 확인 후 제거 (이벤트 위임)
+        $logEntry.addEventListener('click', (e) => {
+            const target = e.target;
+            if (target.classList.contains('log-item')) {
+                const confirmed = confirm(`${target.textContent}을(를) 삭제하시겠습니까?`);
+                if (confirmed) target.remove(); // 확인 시 DOM에서 제거
+            }
+        });
+
+        // 버튼 이벤트 바인딩
+        $startBtn.addEventListener('click', startStopwatch);   // 시작 버튼
+        $pauseBtn.addEventListener('click', pauseStopwatch);   // 일시정지/재개 버튼
+        $resetBtn.addEventListener('click', resetStopwatch);   // 초기화 버튼
+    </script>
+
+
+
+
+</body>
+</html>
