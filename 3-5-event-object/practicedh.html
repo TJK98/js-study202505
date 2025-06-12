@@ -91,7 +91,7 @@
     </div>
 
     <script>
-        // 이미지 경로를 저장할 배열
+        // 슬라이더에 사용할 이미지 경로들을 배열로 저장
         const images = [
             'https://blog.kakaocdn.net/dn/dN4uhe/btr8xWDwbrK/5YjBrelhtJwU2BAcLtEVoK/img.jpg',
             "https://www.sisajournal.com/news/photo/202108/222572_131065_5150.jpg",
@@ -99,66 +99,75 @@
             'https://img.wowtv.co.kr/wowtv_news/dnrs/20200922/B20200922173834073.jpg',
         ];
 
-        const $image = document.getElementById('image');
-        const $thumbnail = document.getElementById('thumbnails');
-        const $nextBtn = document.getElementById('next');
-        const $prevBtn = document.getElementById('prev');
+        // DOM 요소들을 변수에 저장
+        const $image = document.getElementById('image');           // 메인 이미지 요소
+        const $thumbnail = document.getElementById('thumbnails');  // 썸네일 컨테이너
+        const $nextBtn = document.getElementById('next');           // 다음 버튼
+        const $prevBtn = document.getElementById('prev');           // 이전 버튼
 
+        // 현재 보여지고 있는 이미지의 인덱스를 저장하는 변수
         let currentIndex = 0;
 
-        // 배열 안 이미지 thumbnails 추가
+        // 이미지 배열만큼 썸네일 이미지 요소를 동적으로 생성
         for (let i = 0; i < images.length; i++) {
-            // 이미지 요소 생성
-            const img = document.createElement('img');
-            // url 추가
-            img.src = images[i];
-            // classname 추가(css)
-            img.className = 'thumbnail';
-            // id 추가(selector용)
-            img.id = 'thumbnail-'+i;
+            const img = document.createElement('img');  // <img> 요소 생성
+            img.src = images[i];                        // 썸네일 이미지의 src 설정
+            img.className = 'thumbnail';                // 썸네일 스타일을 위한 클래스 추가
+            img.id = 'thumbnail-' + i;                  // 고유한 ID 부여 (예: thumbnail-0)
 
-            thumbnails.appendChild(img);
+            thumbnails.appendChild(img);                // 썸네일 요소를 DOM에 추가
         }
 
+        // 메인 이미지를 바꾸는 함수 (버튼 또는 썸네일 클릭 시 실행됨)
         function changeImage(clickedButton, e) {
             if (clickedButton === 'next') {
-
+                // 다음 버튼 클릭 시 인덱스를 1 증가
                 currentIndex++;
 
+                // 마지막 이미지에서 다시 처음으로 순환
                 if (currentIndex === images.length) {
                     currentIndex = 0;
                 }
 
             } else if(clickedButton === 'prev') {
-
+                // 이전 버튼 클릭 시 인덱스를 1 감소
                 currentIndex--;
 
+                // 첫 번째 이미지에서 다시 마지막으로 순환
                 if (currentIndex === -1) {
                     currentIndex = images.length - 1;
                 }
 
             } else if (clickedButton === 'thumbnail') {
+                // 썸네일을 클릭했을 때 실행되는 로직
 
-                // 여기부터 else if로 다 뺏어. 너가 원하는 깰꼼쓰
-                const target = e.target;
+                const target = e.target;  // 실제 클릭된 요소를 가져옴
+
+                // 클릭된 요소가 썸네일인지 확인 (방어 코드)
                 if (target.classList.contains('thumbnail')) {
-                    // id가 "thumbnail-0" 형태니까 숫자만 따로빼와서 index값 추출
-                    const id = target.id;
-                    // 숫자여도 문자열이라 정수형으로 파싱
+                    const id = target.id;  // 예: "thumbnail-2"
+
+                    // id에서 숫자 부분만 추출하여 정수로 변환
                     const index = parseInt(id.replace('thumbnail-', ''), 10);
 
-                    // 썸내일의 인덱스 위치로 변경 - 다음 / 이전을 정확하게 하기 위함
-                    currentIndex = index;
+                    // 해당 썸네일에 해당하는 이미지로 전환
+                    currentIndex = index;  // 슬라이더 상태도 동기화
                 }
             }
 
+            // 메인 이미지 src를 현재 인덱스에 해당하는 이미지로 변경
             $image.src = images[currentIndex];
         }
 
-        // 썸네일 이벤트 생성
+        // 썸네일 클릭 시 이벤트 위임 방식으로 핸들링
         $thumbnail.addEventListener('click', (e) => changeImage('thumbnail', e));
+
+        // 다음 버튼 클릭 시
         $nextBtn.addEventListener('click', () => changeImage('next'));
+
+        // 이전 버튼 클릭 시
         $prevBtn.addEventListener('click', () => changeImage('prev'));
+
     </script>
 </body>
 </html>
