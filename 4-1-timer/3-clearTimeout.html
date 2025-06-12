@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Title</title>
+</head>
+<body>
+
+    <button id="start">시작</button>
+    <button id="cancel" disabled>취소</button>
+    <p class="msg"></p>
+
+    <script>
+        const $start = document.getElementById(`start`);
+        const $cancel = document.getElementById(`cancel`);
+        const $msg = document.querySelector(`.msg`);
+
+        let timeId = null;
+
+        $start.addEventListener(`click`, e => {
+            $start.disabled = true; //버튼 잠구기
+            $cancel.disabled = false; // 버튼 열기
+            $msg.textContent = `째깍째깍`;
+            timeId = setTimeout(() => {
+                $msg.textContent = `2초 후`;
+                $start.disabled = false;
+                $cancel.disabled = true;
+            }, 2000);
+        });
+
+        $cancel.addEventListener(`click`, e => {
+            clearTimeout(timeId); // setTimeout 취소 함수
+            $msg.textContent = `타이머가 취소 되었습니다.`;
+            $start.disabled = false;
+            $cancel.disabled = true;
+        });
+    </script>
+
+</body>
+</html>
