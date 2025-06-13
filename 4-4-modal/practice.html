@@ -1,0 +1,80 @@
+<script>
+  // ===== 요소 노드 가져오기 ===== //
+  const $mainModalBtn = document.getElementById('open-main-modal-btn'); // 메인 모달 열기 버튼
+  const $mainOverlay = document.getElementById('modal-overlay-1');      // 메인 모달 오버레이
+
+  const $subModalBtn = document.getElementById('open-nested-modal-btn'); // 중첩 모달 열기 버튼
+  const $subOverlay = document.getElementById('modal-overlay-2');        // 중첩 모달 오버레이
+
+  const $closeButtons = [...document.querySelectorAll('.close-btn')];   // 모든 닫기 버튼 (NodeList → 배열로 변환)
+
+  // ===== 공통 동작 함수 정의 ===== //
+
+  // 👉 모달 열기 함수: 오버레이를 flex로 보여주고 body 스크롤 막기
+  function openModal($modalOverlay) {
+    $modalOverlay.style.display = 'flex';
+    document.body.classList.add('modal-open'); // body에 클래스 추가해서 스크롤 제거
+  }
+
+  // 👉 모달 닫기 함수: 오버레이를 다시 안 보이게 함
+  function closeModal($modalOverlay) {
+    $modalOverlay.style.display = 'none';
+
+    // console로 어떤 모달이 닫히는지 확인용
+    console.log($modalOverlay);
+
+    // 메인 모달이 닫힐 때만 스크롤 다시 허용
+    if ($modalOverlay === $mainOverlay) {
+      document.body.classList.remove('modal-open');
+    }
+  }
+
+  // ===== 이벤트 바인딩 ===== //
+
+  // ✅ 메인 모달 열기 버튼 클릭 시
+  $mainModalBtn.addEventListener('click', e => {
+    openModal($mainOverlay);
+  });
+
+  // ✅ 중첩 모달 열기 버튼 클릭 시
+  $subModalBtn.addEventListener('click', e => {
+    openModal($subOverlay);
+  });
+
+  // ✅ 모든 닫기 버튼에 이벤트 연결
+  $closeButtons.forEach($closeBtn => {
+    $closeBtn.addEventListener('click', e => {
+      // data-modal-id 속성으로 어떤 모달을 닫을지 찾음
+      const $targetModal = document.getElementById($closeBtn.dataset.modalId);
+      closeModal($targetModal);
+    });
+  });
+
+  // ✅ 검정 배경 클릭하면 모달 닫기
+  $mainOverlay.addEventListener('click', e => {
+    // 오버레이(바깥 영역)만 클릭한 경우에만 닫힘
+    if (e.target === $mainOverlay) {
+      closeModal($mainOverlay);
+    }
+  });
+
+  $subOverlay.addEventListener('click', e => {
+    if (e.target === $subOverlay) {
+      closeModal($subOverlay);
+    }
+  });
+
+  // ✅ ESC 키로 모달 닫기
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      // 중첩 모달이 열려있으면 중첩 모달부터 닫고
+      if ($subOverlay.style.display === 'flex') {
+        closeModal($subOverlay);
+      }
+      // 중첩 모달이 안 열려 있으면 메인 모달 닫기
+      else if ($mainOverlay.style.display === 'flex') {
+        closeModal($mainOverlay);
+      }
+    }
+  });
+</script>
