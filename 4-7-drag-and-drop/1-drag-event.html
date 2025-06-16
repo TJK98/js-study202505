@@ -100,7 +100,7 @@
             // 현재 드래그 중인 요소의 마우스 좌표에 따라 빈 박스가 들어갈 위치를 정함
             // e.target : 드래그 요소로 덮고 있는 요소
             const $target = e.target;
-            // 밝고 있는게 드래그 가능한 요소일 때만 빅박스 배치
+            // 밟고 있는게 드래그 가능한 요소일 때만 빈박스 배치
             if ($target.classList.contains(`draggable-item`)) {
                 // 밟고 있는 target의 위치 정보를 확인
                 const rect = $target.getBoundingClientRect();
